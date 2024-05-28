@@ -10,7 +10,7 @@ function loadWords() {
 	       wordData = JSON.parse(xhttp.response);
 	       updateButtons();
 	       hideLoader();
-	       loadCard(document);
+	       loadCard(document.querySelectorAll('div.flip-card')[0]);
 	    }
 	};
 	xhttp.open("GET", wordUrl(), true);
@@ -48,10 +48,22 @@ function updateButtons() {
 	document.getElementById("next-btn").style.visibility = nextVisibility;
 }
 
-function loadCard(object) {
-	object.querySelectorAll('div[class="kanji"]')[0].innerHTML = wordData.words[wordPointer].word;
-	object.querySelectorAll('div[class="reading"]')[0].innerHTML = wordData.words[wordPointer].reading;
-	object.querySelectorAll('div[class="meaning"]')[0].innerHTML = wordData.words[wordPointer].meaning;
+function loadCard(object) { 
+	flipCardIfNeeded(object);
+
+	object.querySelectorAll('div.kanji')[0].innerHTML = wordData.words[wordPointer].word;
+	object.querySelectorAll('div.reading')[0].innerHTML = wordData.words[wordPointer].reading;
+	object.querySelectorAll('div.meaning')[0].innerHTML = wordData.words[wordPointer].meaning;
+}
+
+function flipCardIfNeeded(object) {
+	if (object.classList.contains('flipped')) {
+		var innerCard = object.firstElementChild;
+		innerCard.classList.add("notransition");
+		flipCard(object);
+		innerCard.offsetHeight;
+		innerCard.classList.remove("notransition");
+	}	
 }
 
 function flipCard(object) {
@@ -66,7 +78,7 @@ function nextCard() {
 	fakeCard("dismissed");
 	wordPointer = wordPointer + 1;
 	updateButtons();
-	loadCard(document.querySelectorAll('div[class="flip-card"]')[0]);
+	loadCard(document.querySelectorAll('div.flip-card')[0]);
 }
 
 function previousCard() {
@@ -99,7 +111,7 @@ function destroyFake(element) {
 }
 
 function destroyFakeAndLoad(element) {
-	loadCard(document.querySelectorAll('div[class="flip-card"]')[0]);
+	loadCard(document.querySelectorAll('div.flip-card')[0]);
 	element.currentTarget.remove();
 }
 

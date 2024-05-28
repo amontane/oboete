@@ -1,3 +1,10 @@
+.notransition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
 @keyframes dismiss {
   0% {
     position: absolute;
