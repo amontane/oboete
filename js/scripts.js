@@ -1,4 +1,4 @@
-var selectedKanjiUnits = "";
+var selectedKanjiUnits = "16,17,18,19,20";
 var selectedLanguage = "cat";
 var wordData;
 var wordPointer = 0;
@@ -8,6 +8,7 @@ function loadWords() {
 	xhttp.onreadystatechange = function() {
 	    if (this.readyState == 4 && this.status == 200) {
 	       wordData = JSON.parse(xhttp.response);
+	       updateButtons();
 	       hideLoader();
 	       loadCard(document);
 	    }
@@ -40,6 +41,13 @@ function hideLoader() {
 
 }
 
+function updateButtons() {
+	var prevVisibility = (wordPointer <= 0) ? "hidden" : "visible";
+	var nextVisibility = (wordPointer >= wordData.words.length) ? "hidden" : "visible";
+	document.getElementById("prev-btn").style.visibility = prevVisibility;
+	document.getElementById("next-btn").style.visibility = nextVisibility;
+}
+
 function loadCard(object) {
 	object.querySelectorAll('div[class="kanji"]')[0].innerHTML = wordData.words[wordPointer].word;
 	object.querySelectorAll('div[class="reading"]')[0].innerHTML = wordData.words[wordPointer].reading;
@@ -57,12 +65,14 @@ function flipCard(object) {
 function nextCard() {
 	fakeCard("dismissed");
 	wordPointer = wordPointer + 1;
+	updateButtons();
 	loadCard(document.querySelectorAll('div[class="flip-card"]')[0]);
 }
 
 function previousCard() {
 	var fake = fakeCard("presented");
 	wordPointer = wordPointer - 1;
+	updateButtons();
 	loadCard(fake);
 }
 

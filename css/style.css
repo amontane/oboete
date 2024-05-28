@@ -26,23 +26,42 @@
   }  
 }
 
+div {
+  box-sizing: border-box;
+}
+
+#main-body {
+  width: 400px;
+  margin: auto;
+}
+
 #card-container {
   position: static;
   width: 400px;
   height: 525px;
   padding: 0;
+  margin: 10px;
 }
 
 #button-container {
   position: relative;
+  width: 400px;
+  margin: 10px;
+}
 
+button {
+  position: relative;
+  width: 49%;
+  height: 50px;
+  font-size: 20px;
+  margin: 0 0px;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
   position: absolute;
-  top: 10px;
-  left: 10px;
   background-color: transparent;
   font-family: Helvetica;
   width: 400px;
@@ -61,7 +80,7 @@
 
 .flip-card.fake.presented {
   animation-name: present;
-  animation-duration: 0.s;
+  animation-duration: 0.4s;
 }
 
 /* This container is needed to position the front and back side */
