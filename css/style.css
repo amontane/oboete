@@ -1,9 +1,55 @@
+@keyframes dismiss {
+  0% {
+    position: absolute;
+    opacity: 1;
+  }
+
+  100% {
+    position: absolute;
+    transform-origin: -800px;
+    transform: rotateZ(-180deg);
+    opacity: 0;
+  }
+}
+
+@keyframes present {
+  0% {
+    position: absolute;
+    transform-origin: -800px;
+    transform: rotateZ(-180deg);
+    opacity: 0;
+  }
+
+  100% {
+    position: absolute;
+    opacity: 1;
+  }  
+}
+
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
+  position: absolute;
+  top: 10px;
+  left: 10px;
   background-color: transparent;
+  font-family: Helvetica;
   width: 400px;
   height: 525px;
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+.flip-card.fake {
+  z-index: 0;
+}
+
+.flip-card.fake.dismissed {
+  animation-name: dismiss;
+  animation-duration: 0.8s;
+}
+
+.flip-card.fake.presented {
+  animation-name: present;
+  animation-duration: 0.4s;
 }
 
 /* This container is needed to position the front and back side */
@@ -19,7 +65,7 @@
 }
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
-.flip-card:hover .flip-card-inner {
+.flip-card.flipped .flip-card-inner {
   transform: rotateY(180deg);
 }
 
@@ -44,6 +90,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size:60px;
+  width: 90%;
   color: black;
 }
 
