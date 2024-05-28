@@ -67,8 +67,8 @@ function previousCard() {
 }
 
 function fakeCard(className) {
-	var mainContainer = document.getElementById("main-body");
-	var oldCard = mainContainer.firstElementChild;
+	var container = document.getElementById("card-container");
+	var oldCard = container.firstElementChild;
 
 	var callback = (className == "presented") ? destroyFakeAndLoad : destroyFake; 
 
@@ -79,7 +79,7 @@ function fakeCard(className) {
 	fakeCard.addEventListener("webkitAnimationEnd", callback, false);
 	fakeCard.addEventListener("animationend", callback, false);
 
-	mainContainer.appendChild(fakeCard);
+	container.appendChild(fakeCard);
 
 	return fakeCard
 }
