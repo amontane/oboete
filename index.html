@@ -3,12 +3,51 @@
 		<title>Oboete!</title>
 		<meta name="viewport" content="initial-scale=1, maximum-scale=1">
 		<script src="js/scripts.js"></script>
+		<script src="js/i18n.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
 	</head>
 
 	<body>
-		<div id="side-menu"></div>
-		<div id="overlay"></div>
+		<div id="side-menu">
+			<div id="option-container">
+				<div id="sect-unit" class="section">
+					Basic Kanji Book
+				</div>
+				<div id="btn-k1" class="button" onclick="toggleUnit(this)">Unitat 1</div>
+				<div id="btn-k2" class="button" onclick="toggleUnit(this)">Unitat 2</div>
+				<div id="btn-k3" class="button" onclick="toggleUnit(this)">Unitat 3</div>
+				<div id="btn-k4" class="button" onclick="toggleUnit(this)">Unitat 4</div>
+				<div id="btn-k5" class="button" onclick="toggleUnit(this)">Unitat 5</div>
+				<div id="btn-k6" class="button" onclick="toggleUnit(this)">Unitat 6</div>
+				<div id="btn-k7" class="button" onclick="toggleUnit(this)">Unitat 7</div>
+				<div id="btn-k8" class="button" onclick="toggleUnit(this)">Unitat 8</div>
+				<div id="btn-k9" class="button" onclick="toggleUnit(this)">Unitat 9</div>
+				<div id="btn-k10" class="button" onclick="toggleUnit(this)">Unitat 10</div>
+				<div id="btn-k11" class="button" onclick="toggleUnit(this)">Unitat 11</div>
+				<div id="btn-k12" class="button" onclick="toggleUnit(this)">Unitat 12</div>
+				<div id="btn-k13" class="button" onclick="toggleUnit(this)">Unitat 13</div>
+				<div id="btn-k14" class="button" onclick="toggleUnit(this)">Unitat 14</div>
+				<div id="btn-k15" class="button" onclick="toggleUnit(this)">Unitat 15</div>
+				<div id="btn-k16" class="button" onclick="toggleUnit(this)">Unitat 16</div>
+				<div id="btn-k17" class="button" onclick="toggleUnit(this)">Unitat 17</div>
+				<div id="btn-k18" class="button" onclick="toggleUnit(this)">Unitat 18</div>
+				<div id="btn-k19" class="button" onclick="toggleUnit(this)">Unitat 19</div>
+				<div id="btn-k20" class="button" onclick="toggleUnit(this)">Unitat 20</div>
+				<div id="btn-k21" class="button" onclick="toggleUnit(this)">Unitat 21</div>
+				<div id="btn-k22" class="button" onclick="toggleUnit(this)">Unitat 22</div>
+
+				<div id="sect-lang" class="section">
+					Idioma
+				</div>
+				<div id="btn-lcat" class="button" onclick="checkLang('cat')">Catal&agrave;</div>
+				<div id="btn-les" class="button" onclick="checkLang('es')">Castellano</div>
+				<div id="btn-len" class="button" onclick="checkLang('en')">English</div>
+			</div>
+			<div id="burger-btn" onclick="toggleMenu()">
+				_<br/>_<br/>_
+			</div>
+		</div>
+		<div id="overlay" onclick="toggleMenu()"></div>
 		<div id="main-body">
 			<div id="card-container">
 				<div class="flip-card" onclick="flipCard(this)">

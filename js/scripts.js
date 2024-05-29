@@ -1,5 +1,6 @@
-var selectedKanjiUnits = "16,17,18,19,20";
-var selectedLanguage = "cat";
+var selectedKanjiUnits = localStorage.getItem("kunits") ?? "";
+var selectedLanguage = localStorage.getItem("lang") ?? "cat";
+var newSelectedLanguage = selectedLanguage;
 var wordData;
 var wordPointer = 0;
 
@@ -25,12 +26,48 @@ function wordUrl() {
 	return "api/words/?lang=" + selectedLanguage + kunitQuery;
 }
 
-function showMenu() {
-
+function toggleMenu() {
+	if (document.body.classList.contains("menu-out")) {
+		document.body.classList.remove("menu-out");
+		menuWasUpdated();
+	} else {
+		document.body.classList.add("menu-out");
+		updateMenu();
+	}
 }
 
-function hideMenu() {
+function updateMenu() {
+	checkLang(selectedLanguage);
+	var unitArray = selectedKanjiUnits.split(",");
+	for (var i = 1; i <= 22; i++) {
+		var button = document.getElementById("btn-k" + i);
+		if (unitArray.includes("" + i)) {
+			button.classList.add("pressed");
+		} else {
+			button.classList.remove("pressed");
+		}
+	}
+}
 
+function menuWasUpdated() {
+	var newSelectedKanjiUnits = "";
+	var separator = "";
+	for (var i = 1; i <= 22; i++) {
+		if (document.getElementById("btn-k" + i).classList.contains("pressed")) {
+			newSelectedKanjiUnits = newSelectedKanjiUnits + separator + i;
+			separator = ",";
+		}
+	}
+
+	if (selectedKanjiUnits != newSelectedKanjiUnits || selectedLanguage != newSelectedLanguage) {
+		selectedKanjiUnits = newSelectedKanjiUnits;
+		selectedLanguage = newSelectedLanguage;
+		localStorage.setItem("kunits", selectedKanjiUnits);
+		localStorage.setItem("lang", selectedLanguage);
+		wordPointer = 0;
+		localize();
+		loadWords();
+	}
 }
 
 function showLoader() {
@@ -39,6 +76,22 @@ function showLoader() {
 
 function hideLoader() {
 
+}
+
+function toggleUnit(button) {
+	if (button.classList.contains("pressed")) {
+		button.classList.remove("pressed");
+	} else {
+		button.classList.add("pressed");
+	}
+}
+
+function checkLang(lang) {
+	document.getElementById("btn-lcat").classList.remove("pressed");
+	document.getElementById("btn-len").classList.remove("pressed");
+	document.getElementById("btn-les").classList.remove("pressed");
+	document.getElementById("btn-l" + lang).classList.add("pressed");
+	newSelectedLanguage = lang;
 }
 
 function updateButtons() {
@@ -117,5 +170,6 @@ function destroyFakeAndLoad(element) {
 
 function documentReady() {
 	showLoader();
+	localize();
 	loadWords();
 }
