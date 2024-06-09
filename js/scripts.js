@@ -1,6 +1,8 @@
 var selectedKanjiUnits = localStorage.getItem("kunits") ?? "";
 var selectedLanguage = localStorage.getItem("lang") ?? "cat";
+var selectedOrder = localStorage.getItem("order") ?? "fix";
 var newSelectedLanguage = selectedLanguage;
+var newSelectedOrder = selectedOrder;
 var wordData;
 var wordPointer = 0;
 
@@ -20,10 +22,14 @@ function loadWords() {
 
 function wordUrl() {
 	var kunitQuery = "";
+	var randomizeQuery = "";
 	if (selectedKanjiUnits != "") {
 		kunitQuery = "&kunits=" + selectedKanjiUnits;
 	}
-	return "api/words/?lang=" + selectedLanguage + kunitQuery;
+	if (selectedOrder == "rand") {
+		randomizeQuery = "&randomize=yes";
+	}
+	return "api/words/?lang=" + selectedLanguage + randomizeQuery + kunitQuery;
 }
 
 function toggleMenu() {
@@ -37,6 +43,7 @@ function toggleMenu() {
 }
 
 function updateMenu() {
+	checkOrder(selectedOrder);
 	checkLang(selectedLanguage);
 	var unitArray = selectedKanjiUnits.split(",");
 	for (var i = 1; i <= 22; i++) {
@@ -59,11 +66,13 @@ function menuWasUpdated() {
 		}
 	}
 
-	if (selectedKanjiUnits != newSelectedKanjiUnits || selectedLanguage != newSelectedLanguage) {
+	if (selectedKanjiUnits != newSelectedKanjiUnits || selectedLanguage != newSelectedLanguage || selectedOrder != newSelectedOrder) {
 		selectedKanjiUnits = newSelectedKanjiUnits;
 		selectedLanguage = newSelectedLanguage;
+		selectedOrder = newSelectedOrder;
 		localStorage.setItem("kunits", selectedKanjiUnits);
 		localStorage.setItem("lang", selectedLanguage);
+		localStorage.setItem("order", selectedOrder);
 		wordPointer = 0;
 		localize();
 		loadWords();
@@ -94,9 +103,16 @@ function checkLang(lang) {
 	newSelectedLanguage = lang;
 }
 
+function checkOrder(order) {
+	document.getElementById("btn-ofix").classList.remove("pressed");
+	document.getElementById("btn-orand").classList.remove("pressed");
+	document.getElementById("btn-o" + order).classList.add("pressed");
+	newSelectedOrder = order;
+}
+
 function updateButtons() {
 	var prevVisibility = (wordPointer <= 0) ? "hidden" : "visible";
-	var nextVisibility = (wordPointer >= wordData.words.length) ? "hidden" : "visible";
+	var nextVisibility = (wordPointer >= wordData.words.length - 1) ? "hidden" : "visible";
 	document.getElementById("prev-btn").style.visibility = prevVisibility;
 	document.getElementById("next-btn").style.visibility = nextVisibility;
 }

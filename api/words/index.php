@@ -4,11 +4,15 @@ require __DIR__ . '/methods.php';
 
 $lang = $_GET["lang"];
 $kanjiunits = $_GET["kunits"];
+$randomize = ($_GET["randomize"] == "yes");
 
 header('Content-Type: application/json;charset=utf-8');
 
 $words = getWords($kanjiunits, $lang);
-shuffle($words);
+
+if ($randomize) {
+	shuffle($words);
+}
 
 $separator = '';
 
