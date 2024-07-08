@@ -2,13 +2,14 @@
 
 require __DIR__ . '/methods.php';
 
-$lang = $_GET["lang"];
-$kanjiunits = $_GET["kunits"];
+@$lang = $_GET["lang"];
+@$kanjiunits = $_GET["kunits"];
+@$minnaunits = $_GET["munits"];
 $randomize = ($_GET["randomize"] == "yes");
 
 header('Content-Type: application/json;charset=utf-8');
 
-$words = getWords($kanjiunits, $lang);
+$words = getWords($kanjiunits, $minnaunits, $lang);
 
 if ($randomize) {
 	shuffle($words);

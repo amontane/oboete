@@ -1,10 +1,13 @@
 var selectedKanjiUnits = localStorage.getItem("kunits") ?? "";
+var selectedMinnaUnits = localStorage.getItem("munits") ?? "";
 var selectedLanguage = localStorage.getItem("lang") ?? "cat";
 var selectedOrder = localStorage.getItem("order") ?? "fix";
 var newSelectedLanguage = selectedLanguage;
 var newSelectedOrder = selectedOrder;
 var wordData;
 var wordPointer = 0;
+var totalKanjiUnits = 22;
+var totalMinnaUnits = 20;
 
 function loadWords() {
 	var xhttp = new XMLHttpRequest();
@@ -22,14 +25,18 @@ function loadWords() {
 
 function wordUrl() {
 	var kunitQuery = "";
+	var munitQuery = "";
 	var randomizeQuery = "";
 	if (selectedKanjiUnits != "") {
 		kunitQuery = "&kunits=" + selectedKanjiUnits;
 	}
+	if (selectedMinnaUnits != "") {
+		munitQuery = "&munits=" + selectedMinnaUnits;
+	}
 	if (selectedOrder == "rand") {
 		randomizeQuery = "&randomize=yes";
 	}
-	return "api/words/?lang=" + selectedLanguage + randomizeQuery + kunitQuery;
+	return "api/words/?lang=" + selectedLanguage + randomizeQuery + kunitQuery + munitQuery;
 }
 
 function toggleMenu() {
@@ -46,8 +53,18 @@ function updateMenu() {
 	checkOrder(selectedOrder);
 	checkLang(selectedLanguage);
 	var unitArray = selectedKanjiUnits.split(",");
-	for (var i = 1; i <= 22; i++) {
+	for (var i = 1; i <= totalKanjiUnits; i++) {
 		var button = document.getElementById("btn-k" + i);
+		if (unitArray.includes("" + i)) {
+			button.classList.add("pressed");
+		} else {
+			button.classList.remove("pressed");
+		}
+	}
+	
+	var unitArray = selectedMinnaUnits.split(",");
+	for (var i = 1; i <= totalMinnaUnits; i++) {
+		var button = document.getElementById("btn-m" + i);
 		if (unitArray.includes("" + i)) {
 			button.classList.add("pressed");
 		} else {
@@ -58,19 +75,30 @@ function updateMenu() {
 
 function menuWasUpdated() {
 	var newSelectedKanjiUnits = "";
+	var newSelectedMinnaUnits = "";
 	var separator = "";
-	for (var i = 1; i <= 22; i++) {
+	for (var i = 1; i <= totalKanjiUnits; i++) {
 		if (document.getElementById("btn-k" + i).classList.contains("pressed")) {
 			newSelectedKanjiUnits = newSelectedKanjiUnits + separator + i;
 			separator = ",";
 		}
 	}
 
-	if (selectedKanjiUnits != newSelectedKanjiUnits || selectedLanguage != newSelectedLanguage || selectedOrder != newSelectedOrder) {
+	separator = "";
+	for (var i = 1; i <= totalMinnaUnits; i++) {
+		if (document.getElementById("btn-m" + i).classList.contains("pressed")) {
+			newSelectedMinnaUnits = newSelectedMinnaUnits + separator + i;
+			separator = ",";
+		}
+	}
+
+	if (selectedKanjiUnits != newSelectedKanjiUnits || selectedMinnaUnits != newSelectedMinnaUnits || selectedLanguage != newSelectedLanguage || selectedOrder != newSelectedOrder) {
 		selectedKanjiUnits = newSelectedKanjiUnits;
+		selectedMinnaUnits = newSelectedMinnaUnits;
 		selectedLanguage = newSelectedLanguage;
 		selectedOrder = newSelectedOrder;
 		localStorage.setItem("kunits", selectedKanjiUnits);
+		localStorage.setItem("munits", selectedMinnaUnits);
 		localStorage.setItem("lang", selectedLanguage);
 		localStorage.setItem("order", selectedOrder);
 		wordPointer = 0;

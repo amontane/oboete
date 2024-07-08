@@ -28,11 +28,17 @@ function getWordsExtended($units, $language) {
     return $table;
 }
 
-function getWords($units, $language) {
+function getWords($kanjiunits, $minnaunits, $language) {
     $link = new mysqli('localhost', $GLOBALS["OBOETE_mysql_user"], $GLOBALS["OBOETE_mysql_pass"], $GLOBALS["OBOETE_mysql_db"]) or die ('Die');
     mysqli_set_charset($link, "UTF8");
 
-    $query = 'SELECT DISTINCT A.* FROM definition A, kanji_word_reference B WHERE (' . sqlFilterString($units) . ') AND A.word = B.word';
+    if ($kanjiunits != '' && $minnaunits == '') {
+        $minnaunits = "0";
+    } else if ($kanjiunits == '' && $minnaunits != '') {
+        $kanjiunits = "0";
+    }
+
+    $query = '(SELECT DISTINCT A.* FROM definition A, kanji_word_reference B WHERE (' . sqlFilterString($kanjiunits) . ') AND A.word = B.word) UNION (SELECT DISTINCT A.* FROM definition A, minna_word_reference B WHERE (' . sqlFilterString($minnaunits) . ') AND A.word = B.word)';
     $result = mysqli_query($link, $query);
 
     $table = array();
