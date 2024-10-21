@@ -47,7 +47,7 @@ function localize() {
 		"btn-ofix", 
 		"btn-orand"
 	]);
-	localizeKanjiUnits(1, 22);
+	localizeKanjiUnits(1, 23);
 	localizeMinnaUnits(1, 20);
 }
 

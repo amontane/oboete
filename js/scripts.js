@@ -6,7 +6,7 @@ var newSelectedLanguage = selectedLanguage;
 var newSelectedOrder = selectedOrder;
 var wordData;
 var wordPointer = 0;
-var totalKanjiUnits = 22;
+var totalKanjiUnits = 23;
 var totalMinnaUnits = 20;
 
 function loadWords() {
